@@ -1,0 +1,54 @@
+How many players (1 or 2)?
+2
+|1|2|3|
+|4|5|6|
+|7|8|9|
+#Player 1's turn#
+Input position:
+2
+Input mark:
+S
+|1|S|3|
+|4|5|6|
+|7|8|9|
+#Player 2's turn#
+Input position:
+1
+Input mark:
+O
+|O|S|3|
+|4|5|6|
+|7|8|9|
+#Player 1's turn#
+Input position:
+6
+Input mark:
+O
+|O|S|3|
+|4|5|O|
+|7|8|9|
+#Player 2's turn#
+Input position:
+3
+Input mark:
+O
+|O|S|O|
+|4|5|O|
+|7|8|9|
+#Player 1's turn#
+Input position:
+8
+Input mark:
+S
+|O|S|O|
+|4|5|O|
+|7|S|9|
+#Player 2's turn#
+Input position:
+5
+Input mark:
+O
+|O|S|O|
+|4|O|O|
+|7|S|9|
+Player 2 wins!

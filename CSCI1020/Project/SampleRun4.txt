@@ -1,0 +1,54 @@
+How many players (1 or 2)?
+1
+|1|2|3|
+|4|5|6|
+|7|8|9|
+#Player 1's turn#
+Input position:
+3
+Input mark:
+O
+|1|2|O|
+|4|5|6|
+|7|8|9|
+#Computer's turn#
+|S|2|O|
+|4|5|6|
+|7|8|9|
+#Player 1's turn#
+Input position:
+5
+Input mark:
+S
+|S|2|O|
+|4|S|6|
+|7|8|9|
+#Computer's turn#
+|S|O|O|
+|4|S|6|
+|7|8|9|
+#Player 1's turn#
+Input position:
+9
+Input mark:
+S
+|S|O|O|
+|4|S|6|
+|7|8|S|
+#Computer's turn#
+|S|O|O|
+|O|S|6|
+|7|8|S|
+#Player 1's turn#
+Input position:
+6
+Input mark:
+S
+|S|O|O|
+|O|S|S|
+|7|8|S|
+#Computer's turn#
+|S|O|O|
+|O|S|S|
+|S|8|S|
+Computer wins!
