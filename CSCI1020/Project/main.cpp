@@ -26,31 +26,18 @@ private:
 public:
 	/* Constructor: initialize the game board */
 	GameBoard() {
-		for(int i=0;i<3;i++){
-			for(int j=0;j<3;j++){
-				board[i][j] = i*3+j+1;
-			}
-		}		
+		
+		// TODO: Complete this part
+		
 	}
 
 	/* Display the game board
 	   In Part 1, you are required to follow the output format in the sample run
 	   You are welcome to design and implement a better one in Part 2 */
 	void display() {
-		for(int i=0;i<3;i++){
-			cout<<"|";
-			for(int j=0;j<3;j++){
-				if(board[i][j] == -1){
-					cout<<"S";
-				}else if(board[i][j] == -2){
-					cout<<"O";
-				}else{
-					cout<<board[i][j];
-				}
-				cout<<"|";
-			}
-			cout<<"\n";
-		}
+		
+		// TODO: Complete this part
+		
 	}
 
 
@@ -58,55 +45,26 @@ public:
 	   If the specified position has an existing mark, simply return false
 	   Hint: the return value is useful for the computer's naive strategy in Part 1 */
 	bool placeMark(int position, char mark) {
-		int row = (position-1)/3;
-		int col = (position-1)%3;
-		if(board[row][col] == position){
-			if(mark == 'S'){
-				board[row][col] = -1;
-			}
-			if(mark == 'O'){
-				board[row][col] = -2;
-			}
-			return true;
-		}else{
-			return false;
-		}
+		
+		// TODO: Complete this part
+		
 	}
 
 	/* Return true if there is a winner; otherwise return false
 	   The winning message is not printed by this function
 	   Hint: The winner is the current player who just placed the mark */
 	bool hasWinner() {
-		for(int i=0;i<3;i++){
-			if(board[i][0] == -1 && board[i][1] == -2 && board[i][2] == -1){
-				return true;
-			}
-		}
-		for(int i=0;i<3;i++){
-			if(board[0][i] == -1 && board[1][i] == -2 && board[2][i] == -1){
-				return true;
-			}
-		}
-		if(board[0][0] == -1 && board[1][1] == -2 && board[2][2] == -1){
-			return true;
-		}
-		if(board[0][2] == -1 && board[1][1] == -2 && board[2][0] == -1){
-			return true;
-		}
-		return false;
+		
+		// TODO: Complete this part
+	
 	}
 
 	/* Return true if the game board is full; otherwise return false
 	   The draw game message is not printed by this function */
 	bool isFull() {
-		for(int i=0;i<3;i++){
-			for(int j=0;j<3;j++){
-				if(board[i][j] != -1 && board[i][j] != -2){
-					return false;
-				}
-			}
-		}
-		return true;
+		
+		// TODO: Complete this part
+	
 	}
 
 	/* no other constructors nor member functions are allowed */
@@ -115,51 +73,6 @@ public:
 
 
 /* TODO: Define classes for the players here */
-
-class Player {
-private:
-	string player_type;
-	string player_name;
-public:
-	Player(string player_type, string player_name){
-		this->player_type = player_type;
-		this->player_name = player_name;
-	}
-	string getPlayerType(){
-		return player_type;
-	}
-	string getPlayerName(){
-		return player_name;
-	}
-	void setPosition(GameBoard *board){
-		int move;
-		char mark;
-		if(this->player_type == "human"){
-			cout<<"Input position:\n";
-			cin>>move;
-			cout<<"Input mark:\n";
-			cin>>mark;
-			board->placeMark(move, mark);
-		}else{
-			for(int i=1;i<=9;i++){
-				if(i%2==1){
-					if(board->placeMark(i, 'S')){
-						move = i;
-						mark = 'S';
-						break;
-					}
-				}else{
-					if(board->placeMark(i, 'O')){
-						move = i;
-						mark = 'O';
-						break;
-					}
-				}
-			}
-		}
-
-	}
-};
 
 /* In Part 1, you can assume that the user input must be valid
    (i.e, an empty square between 1 and 9 for the position, and 'S' or 'O' for the mark)
@@ -170,44 +83,30 @@ public:
    You are welcome to design and implement better strategies in Part 2.
    Hint: call placeMark() of the GameBoard object */
 
+
+
 /* Represent the game */
 class SOSGame {
 private:
 	/* Declare member variables */
-	GameBoard board;
-	int numOfPlayers;
-	Player players[2] = {Player("human", "Player 1"), Player("human", "Player 2")};
-	int turn;
+	// TODO: Complete this part
+
 public:
 	/* Constructor: create the player objects and the board object
 	   If there is only one human player, he/she is named "Player 1" and the computer player is named "Computer"
 	   If there are two human players, they are named "Player 1" and "Player 2" */
 	SOSGame(int numOfPlayers) {
-		this->numOfPlayers = numOfPlayers;
-		this->board = GameBoard();
-		numOfPlayers == 1 ? this->players[1] = Player("computer", "Computer") : this->players[1] = Player("human", "Player 2");
-		this->turn = 0;
+		
+		// TODO: Complete this part
+	
 	}
 
 	/* Called once in main()
 	   Player 1 moves first */
 	void start() {
-		while(true){
-			board.display();
-			cout<<"#"<<this->players[this->turn].getPlayerName()<<"'s turn#\n";
-			players[this->turn].setPosition(&board);
-			if(board.hasWinner()){
-				board.display();
-				cout<<this->players[this->turn].getPlayerName()<<" wins!\n";
-				break;
-			}
-			if(board.isFull()){
-				board.display();
-				cout<<"Draw game!\n";
-				break;
-			}
-			this->turn = (this->turn+1)%2;
-		}
+		
+		// TODO: Complete this part
+	
 	}
 
 	/* no other constructors nor member functions are allowed */
