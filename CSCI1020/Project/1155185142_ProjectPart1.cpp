@@ -182,7 +182,7 @@ public:
 	/* Constructor: create the player objects and the board object
 	   If there is only one human player, he/she is named "Player 1" and the computer player is named "Computer"
 	   If there are two human players, they are named "Player 1" and "Player 2" */
-	SOSGame(int numOfPlayers) {
+	SOSGame(int numOfPlayers) : board(), numOfPlayers(), turn(0) {
 		this->numOfPlayers = numOfPlayers;
 		this->board = GameBoard();
 		numOfPlayers == 1 ? this->players[1] = Player("computer", "Computer") : this->players[1] = Player("human", "Player 2");

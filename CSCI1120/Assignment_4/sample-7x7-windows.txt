@@ -1,0 +1,612 @@
+Enter seed: 123
+Play in game mode (Y/N)? y
+Manually set up ships (Y/N)? n
+Round 1:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 . . . . . . .   1 B B B B . . .
+ 2 . . . . . . .   2 . . . . . . .
+ 3 . . . . . . .   3 . . C . . . S
+ 4 . . . . . . .   4 P P C . . . S
+ 5 . . . . . . .   5 . . C . . . S
+ 6 . . . . . . .   6 . . C . . . .
+ 7 . . . . . . .   7 . . C . D D D
+Enemy Fleet: CBDSP  Your Fleet: CBDSP
+Enter attack location: z10
+Invalid shot location!
+Enter attack location: A1
+Round 2:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . . . . . . .   2 . . . . . . .
+ 3 . . . . . . .   3 . . C . . . S
+ 4 . . . . . . .   4 P P C . . . S
+ 5 . . . . . . .   5 . . C . . . S
+ 6 . . . . . . .   6 . . C . . . .
+ 7 . . . . . . .   7 . . C . D D D
+Enemy Fleet: CBDSP  Your Fleet: CBDSP
+Round 3:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . . . . . . .   2 . . . . . . .
+ 3 . . . . . . .   3 . . C . . . S
+ 4 . . . . . . .   4 P P C . . . S
+ 5 . . . . . . .   5 . . C . . . S
+ 6 . . . . . . .   6 . . C . . . .
+ 7 . . . . . . .   7 . O C . D D D
+Enemy Fleet: CBDSP  Your Fleet: CBDSP
+Enter attack location: D5
+Round 4:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . . . . . . .   2 . . . . . . .
+ 3 . . . . . . .   3 . . C . . . S
+ 4 . . . . . . .   4 P P C . . . S
+ 5 . . . O . . .   5 . . C . . . S
+ 6 . . . . . . .   6 . . C . . . .
+ 7 . . . . . . .   7 . O C . D D D
+Enemy Fleet: CBDSP  Your Fleet: CBDSP
+Round 5:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . . . . . . .   2 . . . . . . .
+ 3 . . . . . . .   3 . . C . . . S
+ 4 . . . . . . .   4 P P C . . . S
+ 5 . . . O . . .   5 . . C . . . S
+ 6 . . . . . . .   6 . . X . . . .
+ 7 . . . . . . .   7 . O C . D D D
+Enemy Fleet: CBDSP  Your Fleet: CBDSP
+Enter attack location: F4
+Round 6:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . . . . . . .   2 . . . . . . .
+ 3 . . . . . . .   3 . . C . . . S
+ 4 . . . . . X .   4 P P C . . . S
+ 5 . . . O . . .   5 . . C . . . S
+ 6 . . . . . . .   6 . . X . . . .
+ 7 . . . . . . .   7 . O C . D D D
+Enemy Fleet: CBDSP  Your Fleet: CBDSP
+Round 7:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . . . . . . .   2 . . . . . . .
+ 3 . . . . . . .   3 . . C . . . S
+ 4 . . . . . X .   4 P P C . . . S
+ 5 . . . O . . .   5 . . C . . . S
+ 6 . . . . . . .   6 . O X . . . .
+ 7 . . . . . . .   7 . O C . D D D
+Enemy Fleet: CBDSP  Your Fleet: CBDSP
+Enter attack location: F3
+Round 8:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . . . . . . .   2 . . . . . . .
+ 3 . . . . . O .   3 . . C . . . S
+ 4 . . . . . X .   4 P P C . . . S
+ 5 . . . O . . .   5 . . C . . . S
+ 6 . . . . . . .   6 . O X . . . .
+ 7 . . . . . . .   7 . O C . D D D
+Enemy Fleet: CBDSP  Your Fleet: CBDSP
+Round 9:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . . . . . . .   2 . . . . . . .
+ 3 . . . . . O .   3 . . C . . . S
+ 4 . . . . . X .   4 P P C . . . S
+ 5 . . . O . . .   5 . . X . . . S
+ 6 . . . . . . .   6 . O X . . . .
+ 7 . . . . . . .   7 . O C . D D D
+Enemy Fleet: CBDSP  Your Fleet: CBDSP
+Enter attack location: E4
+Round 10:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . . . . . . .   2 . . . . . . .
+ 3 . . . . . O .   3 . . C . . . S
+ 4 . . . . O X .   4 P P C . . . S
+ 5 . . . O . . .   5 . . X . . . S
+ 6 . . . . . . .   6 . O X . . . .
+ 7 . . . . . . .   7 . O C . D D D
+Enemy Fleet: CBDSP  Your Fleet: CBDSP
+Round 11:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . . . . . . .   2 . . . . . . .
+ 3 . . . . . O .   3 . . C . . . S
+ 4 . . . . O X .   4 P P C . . . S
+ 5 . . . O . . .   5 . . X O . . S
+ 6 . . . . . . .   6 . O X . . . .
+ 7 . . . . . . .   7 . O C . D D D
+Enemy Fleet: CBDSP  Your Fleet: CBDSP
+Enter attack location: F5
+Round 12:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . . . . . . .   2 . . . . . . .
+ 3 . . . . . O .   3 . . C . . . S
+ 4 . . . . O X .   4 P P C . . . S
+ 5 . . . O . O .   5 . . X O . . S
+ 6 . . . . . . .   6 . O X . . . .
+ 7 . . . . . . .   7 . O C . D D D
+Enemy Fleet: CBDSP  Your Fleet: CBDSP
+Round 13:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . . . . . . .   2 . . . . . . .
+ 3 . . . . . O .   3 . . C . . . S
+ 4 . . . . O X .   4 P P C . . . S
+ 5 . . . O . O .   5 . O X O . . S
+ 6 . . . . . . .   6 . O X . . . .
+ 7 . . . . . . .   7 . O C . D D D
+Enemy Fleet: CBDSP  Your Fleet: CBDSP
+Enter attack location: G4
+Enemy Patrol Boat sank!
+Round 14:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . . . . . . .   2 . . . . . . .
+ 3 . . . . . O .   3 . . C . . . S
+ 4 . . . . O X X   4 P P C . . . S
+ 5 . . . O . O .   5 . O X O . . S
+ 6 . . . . . . .   6 . O X . . . .
+ 7 . . . . . . .   7 . O C . D D D
+Enemy Fleet: CBDSX  Your Fleet: CBDSP
+Round 15:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . . . . . . .   2 . . . . . . .
+ 3 . . . . . O .   3 . . C . . . S
+ 4 . . . . O X X   4 P P C . . . S
+ 5 . . . O . O .   5 . O X O . . S
+ 6 . . . . . . .   6 . O X . . . .
+ 7 . . . . . . .   7 . O X . D D D
+Enemy Fleet: CBDSX  Your Fleet: CBDSP
+Enter attack location: C6
+Round 16:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . . . . . . .   2 . . . . . . .
+ 3 . . . . . O .   3 . . C . . . S
+ 4 . . . . O X X   4 P P C . . . S
+ 5 . . . O . O .   5 . O X O . . S
+ 6 . . X . . . .   6 . O X . . . .
+ 7 . . . . . . .   7 . O X . D D D
+Enemy Fleet: CBDSX  Your Fleet: CBDSP
+Round 17:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . . . . . . .   2 . . . . . . .
+ 3 . . . . . O .   3 . . C . . . S
+ 4 . . . . O X X   4 P P C . . . S
+ 5 . . . O . O .   5 . O X O . . S
+ 6 . . X . . . .   6 . O X . . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: CBDSX  Your Fleet: CBDSP
+Enter attack location: D6
+Round 18:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . . . . . . .   2 . . . . . . .
+ 3 . . . . . O .   3 . . C . . . S
+ 4 . . . . O X X   4 P P C . . . S
+ 5 . . . O . O .   5 . O X O . . S
+ 6 . . X X . . .   6 . O X . . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: CBDSX  Your Fleet: CBDSP
+Round 19:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . . . . . . .   2 . . . . . . .
+ 3 . . . . . O .   3 . . C . . . S
+ 4 . . . . O X X   4 P P X . . . S
+ 5 . . . O . O .   5 . O X O . . S
+ 6 . . X X . . .   6 . O X . . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: CBDSX  Your Fleet: CBDSP
+Enter attack location: E6
+Round 20:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . . . . . . .   2 . . . . . . .
+ 3 . . . . . O .   3 . . C . . . S
+ 4 . . . . O X X   4 P P X . . . S
+ 5 . . . O . O .   5 . O X O . . S
+ 6 . . X X X . .   6 . O X . . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: CBDSX  Your Fleet: CBDSP
+Round 21:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . . . . . . .   2 . . . . . . .
+ 3 . . . . . O .   3 . . C . . . S
+ 4 . . . . O X X   4 P P X . . . S
+ 5 . . . O . O .   5 . O X O . . S
+ 6 . . X X X . .   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: CBDSX  Your Fleet: CBDSP
+Enter attack location: F6
+Round 22:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . . . . . . .   2 . . . . . . .
+ 3 . . . . . O .   3 . . C . . . S
+ 4 . . . . O X X   4 P P X . . . S
+ 5 . . . O . O .   5 . O X O . . S
+ 6 . . X X X X .   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: CBDSX  Your Fleet: CBDSP
+Round 23:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . . . . . . .   2 . . . . . . .
+ 3 . . . . . O .   3 . . C . . . S
+ 4 . . . . O X X   4 P P X O . . S
+ 5 . . . O . O .   5 . O X O . . S
+ 6 . . X X X X .   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: CBDSX  Your Fleet: CBDSP
+Enter attack location: G6
+Enemy Carrier sank!
+Round 24:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . . . . . . .   2 . . . . . . .
+ 3 . . . . . O .   3 . . C . . . S
+ 4 . . . . O X X   4 P P X O . . S
+ 5 . . . O . O .   5 . O X O . . S
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XBDSX  Your Fleet: CBDSP
+Round 25:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . . . . . . .   2 . . . . . . .
+ 3 . . . . . O .   3 . . C . . . S
+ 4 . . . . O X X   4 P X X O . . S
+ 5 . . . O . O .   5 . O X O . . S
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XBDSX  Your Fleet: CBDSP
+Enter attack location: B2
+Round 26:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . X . . . . .   2 . . . . . . .
+ 3 . . . . . O .   3 . . C . . . S
+ 4 . . . . O X X   4 P X X O . . S
+ 5 . . . O . O .   5 . O X O . . S
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XBDSX  Your Fleet: CBDSP
+Round 27:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . X . . . . .   2 . . . . . . .
+ 3 . . . . . O .   3 . O C . . . S
+ 4 . . . . O X X   4 P X X O . . S
+ 5 . . . O . O .   5 . O X O . . S
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XBDSX  Your Fleet: CBDSP
+Enter attack location: C2
+Round 28:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . X X . . . .   2 . . . . . . .
+ 3 . . . . . O .   3 . O C . . . S
+ 4 . . . . O X X   4 P X X O . . S
+ 5 . . . O . O .   5 . O X O . . S
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XBDSX  Your Fleet: CBDSP
+Your Patrol Boat sank!
+Round 29:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . X X . . . .   2 . . . . . . .
+ 3 . . . . . O .   3 . O C . . . S
+ 4 . . . . O X X   4 X X X O . . S
+ 5 . . . O . O .   5 . O X O . . S
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XBDSX  Your Fleet: CBDSX
+Enter attack location: D2
+Enemy Destroyer sank!
+Round 30:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . X X X . . .   2 . . . . . . .
+ 3 . . . . . O .   3 . O C . . . S
+ 4 . . . . O X X   4 X X X O . . S
+ 5 . . . O . O .   5 . O X O . . S
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XBXSX  Your Fleet: CBDSX
+Round 31:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . X X X . . .   2 . . . . . . .
+ 3 . . . . . O .   3 . O C . . . S
+ 4 . . . . O X X   4 X X X O . . S
+ 5 . . . O . O .   5 O O X O . . S
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XBXSX  Your Fleet: CBDSX
+Enter attack location: a4
+Round 32:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . X X X . . .   2 . . . . . . .
+ 3 . . . . . O .   3 . O C . . . S
+ 4 X . . . O X X   4 X X X O . . S
+ 5 . . . O . O .   5 O O X O . . S
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XBXSX  Your Fleet: CBDSX
+Round 33:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . X X X . . .   2 . . . . . . .
+ 3 . . . . . O .   3 O O C . . . S
+ 4 X . . . O X X   4 X X X O . . S
+ 5 . . . O . O .   5 O O X O . . S
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XBXSX  Your Fleet: CBDSX
+Enter attack location: a5
+Round 34:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . X X X . . .   2 . . . . . . .
+ 3 . . . . . O .   3 O O C . . . S
+ 4 X . . . O X X   4 X X X O . . S
+ 5 O . . O . O .   5 O O X O . . S
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XBXSX  Your Fleet: CBDSX
+Your Carrier sank!
+Round 35:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . X X X . . .   2 . . . . . . .
+ 3 . . . . . O .   3 O O X . . . S
+ 4 X . . . O X X   4 X X X O . . S
+ 5 O . . O . O .   5 O O X O . . S
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XBXSX  Your Fleet: XBDSX
+Enter attack location: a3
+Round 36:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . X X X . . .   2 . . . . . . .
+ 3 O . . . . O .   3 O O X . . . S
+ 4 X . . . O X X   4 X X X O . . S
+ 5 O . . O . O .   5 O O X O . . S
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XBXSX  Your Fleet: XBDSX
+Round 37:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . X X X . . .   2 . . O . . . .
+ 3 O . . . . O .   3 O O X . . . S
+ 4 X . . . O X X   4 X X X O . . S
+ 5 O . . O . O .   5 O O X O . . S
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XBXSX  Your Fleet: XBDSX
+Enter attack location: b4
+Round 38:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . X X X . . .   2 . . O . . . .
+ 3 O . . . . O .   3 O O X . . . S
+ 4 X X . . O X X   4 X X X O . . S
+ 5 O . . O . O .   5 O O X O . . S
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XBXSX  Your Fleet: XBDSX
+Round 39:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . X X X . . .   2 . . O . . . .
+ 3 O . . . . O .   3 O O X O . . S
+ 4 X X . . O X X   4 X X X O . . S
+ 5 O . . O . O .   5 O O X O . . S
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XBXSX  Your Fleet: XBDSX
+Enter attack location: c4
+Round 40:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . X X X . . .   2 . . O . . . .
+ 3 O . . . . O .   3 O O X O . . S
+ 4 X X X . O X X   4 X X X O . . S
+ 5 O . . O . O .   5 O O X O . . S
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XBXSX  Your Fleet: XBDSX
+Round 41:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . X X X . . .   2 . . O . . . .
+ 3 O . . . . O .   3 O O X O . . S
+ 4 X X X . O X X   4 X X X O . . S
+ 5 O . . O . O .   5 O O X O O . S
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XBXSX  Your Fleet: XBDSX
+Enter attack location: d4
+Enemy Battleship sank!
+Round 42:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . X X X . . .   2 . . O . . . .
+ 3 O . . . . O .   3 O O X O . . S
+ 4 X X X X O X X   4 X X X O . . S
+ 5 O . . O . O .   5 O O X O O . S
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XXXSX  Your Fleet: XBDSX
+Round 43:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . . .   1 B B B B . . .
+ 2 . X X X . . .   2 . . O . . . .
+ 3 O . . . . O .   3 O O X O . . X
+ 4 X X X X O X X   4 X X X O . . S
+ 5 O . . O . O .   5 O O X O O . S
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XXXSX  Your Fleet: XBDSX
+Enter attack location: f1
+Round 44:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . X .   1 B B B B . . .
+ 2 . X X X . . .   2 . . O . . . .
+ 3 O . . . . O .   3 O O X O . . X
+ 4 X X X X O X X   4 X X X O . . S
+ 5 O . . O . O .   5 O O X O O . S
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XXXSX  Your Fleet: XBDSX
+Round 45:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . X .   1 B B B B . . .
+ 2 . X X X . . .   2 . . O . . . .
+ 3 O . . . . O .   3 O O X O . . X
+ 4 X X X X O X X   4 X X X O . . X
+ 5 O . . O . O .   5 O O X O O . S
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XXXSX  Your Fleet: XBDSX
+Enter attack location: g1
+Round 46:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . X O   1 B B B B . . .
+ 2 . X X X . . .   2 . . O . . . .
+ 3 O . . . . O .   3 O O X O . . X
+ 4 X X X X O X X   4 X X X O . . X
+ 5 O . . O . O .   5 O O X O O . S
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XXXSX  Your Fleet: XBDSX
+Round 47:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . . X O   1 B B B B . . .
+ 2 . X X X . . .   2 . . O . . . .
+ 3 O . . . . O .   3 O O X O . O X
+ 4 X X X X O X X   4 X X X O . . X
+ 5 O . . O . O .   5 O O X O O . S
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XXXSX  Your Fleet: XBDSX
+Enter attack location: e1
+Round 48:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . X X O   1 B B B B . . .
+ 2 . X X X . . .   2 . . O . . . .
+ 3 O . . . . O .   3 O O X O . O X
+ 4 X X X X O X X   4 X X X O . . X
+ 5 O . . O . O .   5 O O X O O . S
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XXXSX  Your Fleet: XBDSX
+Your Submarine sank!
+Round 49:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . X X O   1 B B B B . . .
+ 2 . X X X . . .   2 . . O . . . .
+ 3 O . . . . O .   3 O O X O . O X
+ 4 X X X X O X X   4 X X X O . . X
+ 5 O . . O . O .   5 O O X O O . X
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XXXSX  Your Fleet: XBDXX
+Enter attack location: f2
+Round 50:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . X X O   1 B B B B . . .
+ 2 . X X X . O .   2 . . O . . . .
+ 3 O . . . . O .   3 O O X O . O X
+ 4 X X X X O X X   4 X X X O . . X
+ 5 O . . O . O .   5 O O X O O . X
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XXXSX  Your Fleet: XBDXX
+Round 51:
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . . X X O   1 B B B B . . .
+ 2 . X X X . O .   2 . . O . . . O
+ 3 O . . . . O .   3 O O X O . O X
+ 4 X X X X O X X   4 X X X O . . X
+ 5 O . . O . O .   5 O O X O O . X
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XXXSX  Your Fleet: XBDXX
+Enter attack location: d1
+Enemy Submarine sank!
+Enemy Ocean       Your Ocean
+   A B C D E F G     A B C D E F G
+ 1 O . . X X X O   1 B B B B . . .
+ 2 . X X X . O .   2 . . O . . . O
+ 3 O . . . . O .   3 O O X O . O X
+ 4 X X X X O X X   4 X X X O . . X
+ 5 O . . O . O .   5 O O X O O . X
+ 6 . . X X X X X   6 . O X O . . .
+ 7 . . . . . . .   7 . O X O D D D
+Enemy Fleet: XXXXX  Your Fleet: XBDXX
+Game over!
+Your fleet wins!
