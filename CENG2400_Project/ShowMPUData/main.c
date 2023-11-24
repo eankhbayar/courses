@@ -127,7 +127,6 @@ void I2CMSimpleIntHandler(void){
     I2CMIntHandler(&g_sI2CMSimpleInst);
 }
 
-
 // read data from MPU6050.
 static const float dt = 1 / 200.0;
 static const int ZERO_OFFSET_COUN = (int)(200);
@@ -139,7 +138,7 @@ static int g_GetZeroOffset = 0;
 static float gyroX_offset = 0.0f, gyroY_offset = 0.0f, gyroZ_offset = 0.0f;
 
 
-void MPU6050Example(int *pitch, int *roll, int *yaw)
+void MPU6050Example(int *pitch, int *roll, int *yaw, int *temper)
 {
     double fAccel[3], fGyro[3];
     double tmp;
@@ -150,7 +149,7 @@ void MPU6050Example(int *pitch, int *roll, int *yaw)
     gyroX = fGyro[0];
     gyroY = fGyro[1];
     gyroZ = fGyro[2];
-
+    *temper = (int)tmp;
 
 
     if (g_GetZeroOffset++ < ZERO_OFFSET_COUN)
@@ -216,11 +215,11 @@ int main(){
     MPU6050_Config(0x68, 1, 1);
     MPU6050_Calib_Set(903, 156, 1362, -4, 56, -16);
 
-    int X = 0, Y = 0, Z = 0;
+    int X = 0, Y = 0, Z = 0, temp = 0;
 
     while(1){
         // get raw data from MPU6050
-        MPU6050Example(&X, &Y, &Z);
+        MPU6050Example(&X, &Y, &Z, &temp);
         // scale to a proper Master rotation
         //pitch, roll, yaw
         // x,     y,    z
@@ -239,7 +238,7 @@ int main(){
         // x is a flag to indicate the end of a package
         // you may design your own package format
         //UARTprintf("R %d %d %d x\n", X, Y, Z);
-        UARTprintf("R %d %d %d x\n", X, Y, Z, UART0_BASE);
+        UARTprintf("R %d %d %d %d x\n", X, Y, Z, temp);
 
 
         // NOTE:
@@ -254,10 +253,7 @@ int main(){
 
         // show data here (recommend to use interrupt)
         // example: R aaa bbb ccc x
-
     }
-
-    return(0);
 }
 void UARTIntHandler(void){}
 
