@@ -70,8 +70,7 @@ int main(void) {
 
     // set UART base addr., clock get and baud rate.
     // used to communicate with computer
-    UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(), 115200,
-        (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
+    UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(), 38400, (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
 
 
     // enable UART5 and GPIOE
@@ -87,7 +86,7 @@ int main(void) {
 
     // set UART base addr., system clock, baud rate
     // used to communicate with HC-05
-    UARTConfigSetExpClk(UART5_BASE, SysCtlClockGet(), 9600,
+    UARTConfigSetExpClk(UART5_BASE, SysCtlClockGet(), 38400,
         (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
 
     GPIOPinTypeGPIOOutput(GPIO_PORTE_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3);
@@ -112,9 +111,8 @@ int main(void) {
 
     while (1)
     {
-        // if (UARTCharsAvail(UART5_BASE)) UARTCharPut(UART5_BASE, UARTCharGet(UART5_BASE));
-
-        //if (UARTCharsAvail(UART0_BASE)) UARTCharPut(UART5_BASE, UARTCharGet(UART0_BASE));
+            if (UARTCharsAvail(UART5_BASE)) UARTCharPut(UART0_BASE, UARTCharGet(UART5_BASE));
+         if (UARTCharsAvail(UART0_BASE)) UARTCharPut(UART5_BASE, UARTCharGet(UART0_BASE));
     }
 
 }
@@ -136,4 +134,3 @@ void UART5IntHandler(void)
         SysCtlDelay(SysCtlClockGet() / (1000 * 3)); //delay some time
     }
 }
-
