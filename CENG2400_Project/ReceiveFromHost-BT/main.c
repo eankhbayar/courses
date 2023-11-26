@@ -30,7 +30,7 @@ What you need to do:
 2. Once you have entered AT mode, try to use AT commands:
     1. AT+UART?
     2. AT+ROLE?
-    3. AT+ADDR?
+    3. AT+ADDR?     // slave +ADDR:22:3:3589C3
     ...
 3. Under AT mode, Check the consistency of the baud rates between the code and the HC-05 device,
     change it according to the baud rate given in this code.
@@ -70,7 +70,7 @@ int main(void) {
 
     // set UART base addr., clock get and baud rate.
     // used to communicate with computer
-    UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(), 38400, (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
+    UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(), 115200, (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
 
 
     // enable UART5 and GPIOE
@@ -111,8 +111,17 @@ int main(void) {
 
     while (1)
     {
-            if (UARTCharsAvail(UART5_BASE)) UARTCharPut(UART0_BASE, UARTCharGet(UART5_BASE));
-         if (UARTCharsAvail(UART0_BASE)) UARTCharPut(UART5_BASE, UARTCharGet(UART0_BASE));
+         if (UARTCharsAvail(UART5_BASE)){
+             char k = UARTCharGet(UART5_BASE);
+//             UARTCharPut(UART5_BASE, k);
+//             UARTCharPut(UART0_BASE, k);
+         };
+         if (UARTCharsAvail(UART0_BASE)){
+             char k = UARTCharGet(UART0_BASE);
+             UARTCharPut(UART5_BASE, k);
+//             UARTCharPut(UART0_BASE, k);
+
+         };
     }
 
 }
@@ -122,15 +131,15 @@ int main(void) {
 //send received characters to UART0 that communicates with PC.
 void UART5IntHandler(void)
 {
-    uint32_t ui32Status;
-
-    ui32Status = UARTIntStatus(UART5_BASE, true); //get interrupt status
-
-    UARTIntClear(UART5_BASE, ui32Status); //clear the asserted interrupts
-
-    while(UARTCharsAvail(UART5_BASE)) //loop while there are chars
-    {
-        UARTCharPut(UART0_BASE, UARTCharGet(UART5_BASE)); //echo character
-        SysCtlDelay(SysCtlClockGet() / (1000 * 3)); //delay some time
-    }
+//    uint32_t ui32Status;
+//
+//    ui32Status = UARTIntStatus(UART5_BASE, true); //get interrupt status
+//
+//    UARTIntClear(UART5_BASE, ui32Status); //clear the asserted interrupts
+//
+//    while(UARTCharsAvail(UART5_BASE)) //loop while there are chars
+//    {
+//        UARTCharPut(UART0_BASE, UARTCharGet(UART5_BASE)); //echo character
+//        SysCtlDelay(SysCtlClockGet() / (1000 * 3)); //delay some time
+//    }
 }
