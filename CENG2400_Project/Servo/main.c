@@ -33,9 +33,9 @@ int initial_state = 0;
 // x is the pitch angle
 // y is the roll angle
 // z is the yaw angle
-volatile uint32_t x_val;
-volatile uint32_t y_val;
-volatile uint32_t z_val;
+volatile uint32_t x_val = 83;
+volatile uint32_t y_val = 83;
+volatile uint32_t z_val = 83;
 
 void init_servo(volatile uint32_t ui8Adjust_horizontal, volatile uint32_t ui8Adjust_vertical){
     SysCtlPeripheralEnable(SYSCTL_PERIPH_PWM1);
@@ -47,6 +47,8 @@ void init_servo(volatile uint32_t ui8Adjust_horizontal, volatile uint32_t ui8Adj
 
     PWMGenPeriodSet(PWM1_BASE, PWM_GEN_0, 40000);
 
+    // Enable PWM1 to generate PWM signals
+    // Enable GPIOD to output signals to servo
     SysCtlPeripheralEnable(SYSCTL_PERIPH_PWM1);
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOD);
     GPIOPinConfigure(GPIO_PD1_M1PWM1);
@@ -56,10 +58,6 @@ void init_servo(volatile uint32_t ui8Adjust_horizontal, volatile uint32_t ui8Adj
 
     PWMGenPeriodSet(PWM1_BASE, PWM_GEN_0, 40000);
 
-    // Enable PWM1 to generate PWM signals
-    // Enable GPIOD to output signals to servo
-    // Enable GPIOF to use buttons
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
 
     ui32PWMClock = SysCtlClockGet()/64;
     ui32Load = (ui32PWMClock / PWM_FREQUENCY) - 1;
@@ -123,6 +121,12 @@ int main()
         initial_state = 1;
     }
 
+    init_uart();
+
+
+    // Enable GPIOF to use buttons
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
+    
     // set GPIOs for buttons
     HWREG(GPIO_PORTF_BASE + GPIO_O_LOCK) = GPIO_LOCK_KEY;
     HWREG(GPIO_PORTF_BASE + GPIO_O_CR)  |= 0x01;
