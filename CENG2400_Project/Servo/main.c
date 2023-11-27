@@ -23,6 +23,10 @@
 #include "driverlib/pwm.h"
 #include "driverlib/pin_map.h"
 #include "driverlib/rom.h"
+#include "inc/hw_ints.h"
+#include "driverlib/interrupt.h"
+#include "driverlib/uart.h"
+#include "utils/uartstdio.h"
 
 #define PWM_FREQUENCY 55
 
@@ -37,7 +41,88 @@ volatile uint32_t x_val = 83;
 volatile uint32_t y_val = 83;
 volatile uint32_t z_val = 83;
 
-void init_servo(volatile uint32_t ui8Adjust_horizontal, volatile uint32_t ui8Adjust_vertical){
+
+
+void InitUART0(){
+    // UART0
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
+
+    // set GPIO A0 and A1 as UART pins.
+    GPIOPinConfigure(GPIO_PA0_U0RX);
+    GPIOPinConfigure(GPIO_PA1_U0TX);
+    // set GPIO A0 and A1 as UART pins.
+    GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
+
+    UARTStdioConfig(0, 115200, SysCtlClockGet());
+    UARTCharPut(UART0_BASE, 'v');
+    UARTprintf("Started:", UART0_BASE);
+}
+
+void InitBluetooth(){
+
+    // enable UART5 and GPIOE
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_UART5);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);
+
+    // Configure board PE4 for RX
+    // configure board PE5 for TX
+    GPIOPinConfigure(GPIO_PE4_U5RX);
+    GPIOPinConfigure(GPIO_PE5_U5TX);
+    // set PORTE pin4 and pin5 as UART type
+    GPIOPinTypeUART(GPIO_PORTE_BASE, GPIO_PIN_4 | GPIO_PIN_5);
+
+    UARTConfigSetExpClk(UART5_BASE, SysCtlClockGet(), 38400,
+            (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
+
+    GPIOPinTypeGPIOOutput(GPIO_PORTE_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3);
+    GPIOPinWrite(GPIO_PORTE_BASE, GPIO_PIN_2|GPIO_PIN_1|GPIO_PIN_3, 2);
+
+    IntMasterEnable();
+    IntEnable(INT_UART5);
+    UARTIntEnable(UART5_BASE, UART_INT_RX | UART_INT_RT);
+
+    UARTCharPut(UART0_BASE, 'i');
+    UARTCharPut(UART0_BASE, 'n');
+    UARTCharPut(UART0_BASE, 'i');
+    UARTCharPut(UART0_BASE, 't');
+    UARTCharPut(UART0_BASE, '\n');
+}
+
+int main()
+{
+    SysCtlClockSet(SYSCTL_SYSDIV_5|SYSCTL_USE_PLL|SYSCTL_OSC_MAIN|SYSCTL_XTAL_16MHZ);
+    SysCtlPWMClockSet(SYSCTL_PWMDIV_64);
+
+    //ui8Adjust is used to contol the servo angle.
+    //We initialize ui8Adjust to 83 to make sure the servo is at the center position.
+    volatile uint32_t ui32Load;
+    volatile uint32_t ui32PWMClock;
+    volatile uint32_t ui8Adjust_horizontal, ui8Adjust_vertical;
+    ui8Adjust_horizontal = 75;
+    ui8Adjust_vertical = 50;
+
+    InitUART0();
+    InitBluetooth();
+
+    // Enable GPIOF to use buttons
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
+
+    // set GPIOs for buttons
+    HWREG(GPIO_PORTF_BASE + GPIO_O_LOCK) = GPIO_LOCK_KEY;
+    HWREG(GPIO_PORTF_BASE + GPIO_O_CR)  |= 0x01;
+    HWREG(GPIO_PORTF_BASE + GPIO_O_LOCK) = 0;
+    GPIODirModeSet(GPIO_PORTF_BASE, GPIO_PIN_4|GPIO_PIN_0, GPIO_DIR_MODE_IN);
+    GPIOPadConfigSet(GPIO_PORTF_BASE, GPIO_PIN_4|GPIO_PIN_0, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);
+
+    /**
+     *  PWMPulseWidthSet(PWM1_BASE, PWM_OUT_0,
+        PWMGenPeriodGet(PWM1_BASE, PWM_GEN_0) / divfact);
+
+
+        PWMOutputState(PWM1_BASE, PWM_OUT_0_BIT, true);
+        PWMGenEnable(PWM1_BASE, PWM_GEN_0);
+     */
     SysCtlPeripheralEnable(SYSCTL_PERIPH_PWM1);
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOD);
     GPIOPinConfigure(GPIO_PD0_M1PWM0);
@@ -66,7 +151,7 @@ void init_servo(volatile uint32_t ui8Adjust_horizontal, volatile uint32_t ui8Adj
 
     PWMGenConfigure(PWM1_BASE, PWM_GEN_1, PWM_GEN_MODE_DOWN);
     PWMGenPeriodSet(PWM1_BASE, PWM_GEN_1, ui32Load);
-    
+
     // set the servo's initial position
     PWMPulseWidthSet(PWM1_BASE, PWM_OUT_0, ui8Adjust_horizontal * ui32Load/1000);
     PWMOutputState(PWM1_BASE, PWM_OUT_0_BIT, true);
@@ -75,78 +160,39 @@ void init_servo(volatile uint32_t ui8Adjust_horizontal, volatile uint32_t ui8Adj
     PWMPulseWidthSet(PWM1_BASE, PWM_OUT_1, ui8Adjust_vertical * ui32Load/1000);
     PWMOutputState(PWM1_BASE, PWM_OUT_1_BIT, true);
     PWMGenEnable(PWM1_BASE, PWM_GEN_0);
-}
-
-void init_uart(){
-    // enable UART5 and GPIOE
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_UART5);
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);
-
-    // Configure board PE4 for RX
-    // configure board PE5 for TX
-    GPIOPinConfigure(GPIO_PE4_U5RX);
-    GPIOPinConfigure(GPIO_PE5_U5TX);
-    // set PORTE pin4 and pin5 as UART type
-    GPIOPinTypeUART(GPIO_PORTE_BASE, GPIO_PIN_4 | GPIO_PIN_5);
-
-    // set UART base addr., system clock, baud rate
-    // used to communicate with HC-05
-    UARTConfigSetExpClk(UART5_BASE, SysCtlClockGet(), 38400,
-        (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
-    
-    GPIOPinTypeGPIOOutput(GPIO_PORTE_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3);
-    GPIOPinWrite(GPIO_PORTE_BASE, GPIO_PIN_2|GPIO_PIN_1|GPIO_PIN_3, 2) ;
-
-    // set interrupt for receiving and showing values
-    IntMasterEnable();
-    IntEnable(INT_UART5);
-    UARTIntEnable(UART5_BASE, UART_INT_RX | UART_INT_RT);
-}
-
-int main()
-{
-    SysCtlClockSet(SYSCTL_SYSDIV_5|SYSCTL_USE_PLL|SYSCTL_OSC_MAIN|SYSCTL_XTAL_16MHZ);
-    SysCtlPWMClockSet(SYSCTL_PWMDIV_64);
-
-    //ui8Adjust is used to contol the servo angle.
-    //We initialize ui8Adjust to 83 to make sure the servo is at the center position.
-    volatile uint32_t ui32Load;
-    volatile uint32_t ui32PWMClock;
-    volatile uint32_t ui8Adjust_horizontal, ui8Adjust_vertical;
-    ui8Adjust_horizontal = 83;
-    ui8Adjust_vertical = 83;
-
-    if(initial_state == 0){
-        init_servo(ui8Adjust_horizontal, ui8Adjust_vertical);
-        initial_state = 1;
-    }
-
-    init_uart();
-
-
-    // Enable GPIOF to use buttons
-    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
-    
-    // set GPIOs for buttons
-    HWREG(GPIO_PORTF_BASE + GPIO_O_LOCK) = GPIO_LOCK_KEY;
-    HWREG(GPIO_PORTF_BASE + GPIO_O_CR)  |= 0x01;
-    HWREG(GPIO_PORTF_BASE + GPIO_O_LOCK) = 0;
-    GPIODirModeSet(GPIO_PORTF_BASE, GPIO_PIN_4|GPIO_PIN_0, GPIO_DIR_MODE_IN);
-    GPIOPadConfigSet(GPIO_PORTF_BASE, GPIO_PIN_4|GPIO_PIN_0, GPIO_STRENGTH_2MA, GPIO_PIN_TYPE_STD_WPU);
-    
-    /**
-     *  PWMPulseWidthSet(PWM1_BASE, PWM_OUT_0,
-        PWMGenPeriodGet(PWM1_BASE, PWM_GEN_0) / divfact);
-
-
-        PWMOutputState(PWM1_BASE, PWM_OUT_0_BIT, true);
-        PWMGenEnable(PWM1_BASE, PWM_GEN_0);
-     */
 
     while(1)
     {
-
+//        if(counter == 10){
+//        }else{
+//            counter++;
+//        }
+//        if (UARTCharsAvail(UART5_BASE)) UARTCharPut(UART0_BASE, UARTCharGet(UART5_BASE));
+        //
+//        if (UARTCharsAvail(UART0_BASE)) UARTCharPut(UART0_BASE, UARTCharGet(UART0_BASE));
         // move the servo to the value
+//        if(GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_4)==0x00)
+//        {
+//           ui8Adjust--;
+//           if(ui8Adjust < 26) // set the working zone from -90 to 90
+//           {
+//               ui8Adjust = 26;
+//           }
+//           PWMPulseWidthSet(PWM1_BASE, PWM_OUT_0, ui8Adjust * ui32Load/1000);
+//           PWMPulseWidthSet(PWM1_BASE, PWM_OUT_1, ui8Adjust * ui32Load/1000);
+//        }
+//
+//        // Check whether the button is pressed
+//        if(GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_0)==0x00)
+//        {
+//           ui8Adjust++;
+//           if(ui8Adjust > 141) // set the working zone
+//           {
+//               ui8Adjust = 141;
+//           }
+//           PWMPulseWidthSet(PWM1_BASE, PWM_OUT_0, ui8Adjust * ui32Load/1000);
+//           PWMPulseWidthSet(PWM1_BASE, PWM_OUT_1, ui8Adjust * ui32Load/1000);
+//        }
         if(ui8Adjust_horizontal < x_val){
             ui8Adjust_horizontal++;
 
@@ -154,7 +200,6 @@ int main()
             {
                 ui8Adjust_horizontal = 141;
             }
-            PWMPulseWidthSet(PWM1_BASE, PWM_OUT_0, ui8Adjust_horizontal * ui32Load/1000);
             PWMPulseWidthSet(PWM1_BASE, PWM_OUT_1, ui8Adjust_horizontal * ui32Load/1000);
         }
         else if(ui8Adjust_horizontal > x_val){
@@ -164,11 +209,10 @@ int main()
             {
                 ui8Adjust_horizontal = 26;
             }
-            PWMPulseWidthSet(PWM1_BASE, PWM_OUT_0, ui8Adjust_horizontal * ui32Load/1000);
             PWMPulseWidthSet(PWM1_BASE, PWM_OUT_1, ui8Adjust_horizontal * ui32Load/1000);
         }
 
-        if(ui8Adjust_vertical < y_val){
+        if(GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_4)==0x00){
             ui8Adjust_vertical++;
 
             if(ui8Adjust_vertical > 141) // set the working zone
@@ -176,9 +220,8 @@ int main()
                 ui8Adjust_vertical = 141;
             }
             PWMPulseWidthSet(PWM1_BASE, PWM_OUT_0, ui8Adjust_vertical * ui32Load/1000);
-            PWMPulseWidthSet(PWM1_BASE, PWM_OUT_1, ui8Adjust_vertical * ui32Load/1000);
         }
-        else if(ui8Adjust_vertical > y_val){
+        else if(GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_0)==0x00){
             ui8Adjust_vertical--;
 
             if(ui8Adjust_vertical < 26) // set the working zone from -90 to 90
@@ -186,8 +229,26 @@ int main()
                 ui8Adjust_vertical = 26;
             }
             PWMPulseWidthSet(PWM1_BASE, PWM_OUT_0, ui8Adjust_vertical * ui32Load/1000);
-            PWMPulseWidthSet(PWM1_BASE, PWM_OUT_1, ui8Adjust_vertical * ui32Load/1000);
         }
+
+//        if(ui8Adjust_vertical < z_val){
+//            ui8Adjust_vertical++;
+//
+//            if(ui8Adjust_vertical > 141) // set the working zone
+//            {
+//                ui8Adjust_vertical = 141;
+//            }
+//            PWMPulseWidthSet(PWM1_BASE, PWM_OUT_0, ui8Adjust_vertical * ui32Load/1000);
+//        }
+//        else if(ui8Adjust_vertical > z_val){
+//            ui8Adjust_vertical--;
+//
+//            if(ui8Adjust_vertical < 26) // set the working zone from -90 to 90
+//            {
+//                ui8Adjust_vertical = 26;
+//            }
+//            PWMPulseWidthSet(PWM1_BASE, PWM_OUT_0, ui8Adjust_vertical * ui32Load/1000);
+//        }
 
        // since the main controlling function is implemented in while loop
        // we need to use delay function to control the rotating speed of the servo.
@@ -221,23 +282,32 @@ void UART5IntHandler(void)
                     i = 0;
                 }
                 else{
-                    if(space_count == 0){
+                    if(space_count == 1){
                         x[i] = temp;
                     }
-                    else if(space_count == 1){
+                    else if(space_count == 2){
                         y[i] = temp;
                     }
-                    else if(space_count == 2){
+                    else if(space_count == 3){
                         z[i] = temp;
                     }
                     i++;
                 }
                 temp = UARTCharGet(UART5_BASE);
-                SysCtlDelay(SysCtlClockGet() / (1000 * 3)); //delay some time
+//                SysCtlDelay(SysCtlClockGet() / (1000 * 3)); //delay some time
             }
-            x_val = atoi(x);
-            y_val = atoi(y);
-            z_val = atoi(z);
+//            UARTCharPut(UART0_BASE, '\n');
+            int temp_x_val = (x[0] - '0') * 100 + (x[1] - '0') * 10 + (x[2] - '0');
+            int temp_y_val = (y[0] - '0') * 100 + (y[1] - '0') * 10 + (y[2] - '0');
+            int temp_z_val = (z[0] - '0') * 100 + (z[1] - '0') * 10 + (z[2] - '0');
+
+//            if(temp_y_val >= 181 && temp_y_val<=255){
+//                y_val = 256-temp_y_val;
+//            }
+//            if(temp_z_val >= 181 && temp_z_val<=255){
+//                z_val = temp_z_val - 256;
+//            }
+            UARTprintf("R %d %d %d x\n", x_val, y_val, z_val);
         }
         // UARTCharPut(UART0_BASE, UARTCharGet(UART5_BASE)); //echo character
     }
