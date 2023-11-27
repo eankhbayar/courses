@@ -38,8 +38,8 @@ int initial_state = 0;
 // y is the roll angle
 // z is the yaw angle
 volatile uint32_t x_val = 83;
-volatile uint32_t y_val = 83;
-volatile uint32_t z_val = 83;
+volatile uint32_t y_val = 30;
+volatile uint32_t z_val = 75;
 
 
 
@@ -99,8 +99,8 @@ int main()
     volatile uint32_t ui32Load;
     volatile uint32_t ui32PWMClock;
     volatile uint32_t ui8Adjust_horizontal, ui8Adjust_vertical;
-    ui8Adjust_horizontal = 75;
-    ui8Adjust_vertical = 50;
+    ui8Adjust_horizontal = 30;
+    ui8Adjust_vertical = 75;
 
     InitUART0();
     InitBluetooth();
@@ -163,6 +163,7 @@ int main()
 
     while(1)
     {
+        UARTprintf("%d %d\n", y_val, z_val);
 //        if(counter == 10){
 //        }else{
 //            counter++;
@@ -193,7 +194,7 @@ int main()
 //           PWMPulseWidthSet(PWM1_BASE, PWM_OUT_0, ui8Adjust * ui32Load/1000);
 //           PWMPulseWidthSet(PWM1_BASE, PWM_OUT_1, ui8Adjust * ui32Load/1000);
 //        }
-        if(ui8Adjust_horizontal < x_val){
+        if(ui8Adjust_horizontal < y_val){
             ui8Adjust_horizontal++;
 
             if(ui8Adjust_horizontal > 141) // set the working zone
@@ -202,7 +203,7 @@ int main()
             }
             PWMPulseWidthSet(PWM1_BASE, PWM_OUT_1, ui8Adjust_horizontal * ui32Load/1000);
         }
-        else if(ui8Adjust_horizontal > x_val){
+        else if(ui8Adjust_horizontal > y_val){
             ui8Adjust_horizontal--;
 
             if(ui8Adjust_horizontal < 26) // set the working zone from -90 to 90
@@ -212,7 +213,7 @@ int main()
             PWMPulseWidthSet(PWM1_BASE, PWM_OUT_1, ui8Adjust_horizontal * ui32Load/1000);
         }
 
-        if(GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_4)==0x00){
+        if(ui8Adjust_vertical < z_val){
             ui8Adjust_vertical++;
 
             if(ui8Adjust_vertical > 141) // set the working zone
@@ -221,7 +222,7 @@ int main()
             }
             PWMPulseWidthSet(PWM1_BASE, PWM_OUT_0, ui8Adjust_vertical * ui32Load/1000);
         }
-        else if(GPIOPinRead(GPIO_PORTF_BASE, GPIO_PIN_0)==0x00){
+        else if(ui8Adjust_vertical > z_val){
             ui8Adjust_vertical--;
 
             if(ui8Adjust_vertical < 26) // set the working zone from -90 to 90
@@ -230,25 +231,6 @@ int main()
             }
             PWMPulseWidthSet(PWM1_BASE, PWM_OUT_0, ui8Adjust_vertical * ui32Load/1000);
         }
-
-//        if(ui8Adjust_vertical < z_val){
-//            ui8Adjust_vertical++;
-//
-//            if(ui8Adjust_vertical > 141) // set the working zone
-//            {
-//                ui8Adjust_vertical = 141;
-//            }
-//            PWMPulseWidthSet(PWM1_BASE, PWM_OUT_0, ui8Adjust_vertical * ui32Load/1000);
-//        }
-//        else if(ui8Adjust_vertical > z_val){
-//            ui8Adjust_vertical--;
-//
-//            if(ui8Adjust_vertical < 26) // set the working zone from -90 to 90
-//            {
-//                ui8Adjust_vertical = 26;
-//            }
-//            PWMPulseWidthSet(PWM1_BASE, PWM_OUT_0, ui8Adjust_vertical * ui32Load/1000);
-//        }
 
        // since the main controlling function is implemented in while loop
        // we need to use delay function to control the rotating speed of the servo.
@@ -301,12 +283,16 @@ void UART5IntHandler(void)
             int temp_y_val = (y[0] - '0') * 100 + (y[1] - '0') * 10 + (y[2] - '0');
             int temp_z_val = (z[0] - '0') * 100 + (z[1] - '0') * 10 + (z[2] - '0');
 
-//            if(temp_y_val >= 181 && temp_y_val<=255){
-//                y_val = 256-temp_y_val;
-//            }
-//            if(temp_z_val >= 181 && temp_z_val<=255){
-//                z_val = temp_z_val - 256;
-//            }
+            if(temp_y_val >= 181 && temp_y_val<=255){
+                y_val = 30 + (256 - temp_y_val);
+            }else{
+                y_val=30;
+            }
+            if(temp_z_val >= 181 && temp_z_val<=255){
+                z_val = 75 + (temp_z_val - 256);
+            }else{
+                z_val = 75 + temp_z_val;
+            }
             UARTprintf("R %d %d %d x\n", x_val, y_val, z_val);
         }
         // UARTCharPut(UART0_BASE, UARTCharGet(UART5_BASE)); //echo character
