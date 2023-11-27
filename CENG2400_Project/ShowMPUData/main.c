@@ -26,7 +26,6 @@
 // What you need to do:
 // 1. design a parser to process the raw MPU data to a proper format according to the NOTE.
 // 2. show the processed data via UART
-
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -59,7 +58,17 @@
 #include "driverlib/uart.h"
 
 #include "include.h"
-
+#include <stdint.h>
+#include <stdbool.h>
+#include "inc/hw_memmap.h"
+#include "inc/hw_types.h"
+#include "driverlib/gpio.h"
+#include "driverlib/pin_map.h"
+#include "driverlib/sysctl.h"
+#include "driverlib/uart.h"
+#include "utils/uartstdio.h"
+#include "inc/hw_ints.h"
+#include "driverlib/interrupt.h"
 // A boolean that is set when a MPU6050 command has completed.
 volatile bool g_bMPU6050Done;
 
@@ -138,7 +147,7 @@ static int g_GetZeroOffset = 0;
 static float gyroX_offset = 0.0f, gyroY_offset = 0.0f, gyroZ_offset = 0.0f;
 
 
-void MPU6050Example(int *pitch, int *roll, int *yaw, int *temper)
+void MPU6050Example(int *pitch, int *roll, int *yaw)
 {
     double fAccel[3], fGyro[3];
     double tmp;
@@ -149,7 +158,6 @@ void MPU6050Example(int *pitch, int *roll, int *yaw, int *temper)
     gyroX = fGyro[0];
     gyroY = fGyro[1];
     gyroZ = fGyro[2];
-    *temper = (int)tmp;
 
 
     if (g_GetZeroOffset++ < ZERO_OFFSET_COUN)
@@ -190,9 +198,62 @@ void MPU6050Example(int *pitch, int *roll, int *yaw, int *temper)
     delayMS(5);
 }
 
-int main(){
-    SysCtlClockSet(SYSCTL_SYSDIV_4 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
+int X = 0, Y = 0, Z = 0;
 
+void printMCU(){
+    char output[3];
+
+    UARTCharPut(UART0_BASE, 'R');
+    UARTCharPut(UART0_BASE, ' ');
+
+
+
+    uint32_t TempX = X;
+    char temp = (char) TempX;
+    int i;
+
+    for(i = 0; i< 3; i++, temp/=10){
+
+        output[i] = temp%10 + 48;
+    }
+
+    UARTCharPut(UART0_BASE, output[2]);
+    UARTCharPut(UART0_BASE, output[1]);
+    UARTCharPut(UART0_BASE, output[0]);
+    UARTCharPut(UART0_BASE, ' ');
+
+
+
+    uint32_t TempY = Y;
+    temp = (char) TempY;
+
+    for(i = 0; i<3; i++, temp /=10){
+        output[i] = temp % 10 + 48;
+    }
+    for(i = 2; i>=0; i--){
+        UARTCharPut(UART0_BASE, output[i]);
+    }
+    UARTCharPut(UART0_BASE, ' ');
+
+    uint32_t TempZ = Z;
+    temp = (char) TempZ;
+
+    for(i = 0; i<3; i++, temp /=10){
+        output[i] = temp % 10 + 48;
+    }
+
+    for(i = 2; i>=0; i--){
+        UARTCharPut(UART0_BASE, output[i]);
+    }
+
+    UARTCharPut(UART0_BASE, ' ');
+
+
+    UARTCharPut(UART0_BASE, 'x');
+    UARTCharPut(UART0_BASE, '\n');
+}
+
+void InitUART0(){
     // UART0
     SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
     SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
@@ -202,11 +263,97 @@ int main(){
     GPIOPinConfigure(GPIO_PA1_U0TX);
     // set GPIO A0 and A1 as UART pins.
     GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
+    UARTConfigSetExpClk(UART0_BASE, SysCtlClockGet(),115200, (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
+}
 
-    // Initialize the UART for console I/O.
-    UARTStdioConfig(0, 115200, SysCtlClockGet());
-    UARTCharPut(UART0_BASE, 'v');
-    UARTprintf("Started:", UART0_BASE);
+void InitBluetooth(){
+
+    // enable UART5 and GPIOE
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_UART5);
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);
+
+    // Configure board PE4 for RX
+    // configure board PE5 for TX
+    GPIOPinConfigure(GPIO_PE4_U5RX);
+    GPIOPinConfigure(GPIO_PE5_U5TX);
+    // set PORTE pin4 and pin5 as UART type
+    GPIOPinTypeUART(GPIO_PORTE_BASE, GPIO_PIN_4 | GPIO_PIN_5);
+
+    UARTConfigSetExpClk(UART5_BASE, SysCtlClockGet(), 38400,
+            (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE | UART_CONFIG_PAR_NONE));
+
+    GPIOPinTypeGPIOOutput(GPIO_PORTE_BASE, GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3);
+    GPIOPinWrite(GPIO_PORTE_BASE, GPIO_PIN_2|GPIO_PIN_1|GPIO_PIN_3, 2);
+
+    IntMasterEnable();
+    IntEnable(INT_UART5);
+    UARTIntEnable(UART5_BASE, UART_INT_RX | UART_INT_RT);
+
+    UARTCharPut(UART0_BASE, 'i');
+    UARTCharPut(UART0_BASE, 'n');
+    UARTCharPut(UART0_BASE, 'i');
+    UARTCharPut(UART0_BASE, 't');
+    UARTCharPut(UART0_BASE, '\n');
+}
+
+void printBluetooth(){
+    char output[3];
+
+        UARTCharPut(UART5_BASE, 'R');
+        UARTCharPut(UART5_BASE, ' ');
+
+
+
+        uint32_t TempX = X;
+        char temp = (char) TempX;
+        int i;
+
+        for(i = 0; i< 3; i++, temp/=10){
+
+            output[i] = temp%10 + 48;
+        }
+
+        UARTCharPut(UART5_BASE, output[2]);
+        UARTCharPut(UART5_BASE, output[1]);
+        UARTCharPut(UART5_BASE, output[0]);
+        UARTCharPut(UART5_BASE, ' ');
+
+
+
+        uint32_t TempY = Y;
+
+        temp = (char) TempY;
+        for(i = 0; i<3; i++, temp /=10){
+            output[i] = temp % 10 + 48;
+        }
+        for(i = 2; i>=0; i--){
+            UARTCharPut(UART5_BASE, output[i]);
+        }
+        UARTCharPut(UART5_BASE, ' ');
+
+        uint32_t TempZ = Z;
+        temp = (char) TempZ;
+
+        for(i = 0; i<3; i++, temp /=10){
+            output[i] = temp % 10 + 48;
+        }
+
+        for(i = 2; i>=0; i--){
+            UARTCharPut(UART5_BASE, output[i]);
+        }
+
+        UARTCharPut(UART5_BASE, ' ');
+
+
+        UARTCharPut(UART5_BASE, 'x');
+        UARTCharPut(UART5_BASE, '\n');
+}
+
+int main(){
+    SysCtlClockSet(SYSCTL_SYSDIV_4 | SYSCTL_USE_PLL | SYSCTL_OSC_MAIN | SYSCTL_XTAL_16MHZ);
+
+    InitUART0();
+    InitBluetooth();
 
     // initialize I2C, you may do not care this part
     InitI2C0();
@@ -215,17 +362,14 @@ int main(){
     MPU6050_Config(0x68, 1, 1);
     MPU6050_Calib_Set(903, 156, 1362, -4, 56, -16);
 
-    int X = 0, Y = 0, Z = 0, temp = 0;
+    volatile int counter = 0;
 
     while(1){
         // get raw data from MPU6050
-        MPU6050Example(&X, &Y, &Z, &temp);
+        MPU6050Example(&X, &Y, &Z);
         // scale to a proper Master rotation
         //pitch, roll, yaw
         // x,     y,    z
-        if(g_bMPU6050Done == true){
-            UARTprintf("MPUDONE", UART0_BASE);
-        }
 //        if(X > 110) X = 110;
 //        if(X < 20) X = 20;
 //
@@ -238,8 +382,15 @@ int main(){
         // x is a flag to indicate the end of a package
         // you may design your own package format
         //UARTprintf("R %d %d %d x\n", X, Y, Z);
-        UARTprintf("R %d %d %d %d x\n", X, Y, Z, temp);
-
+//        UARTprintf("R %d %d %d x\n", X, Y, Z, UART5_BASE);
+        if(counter == 10){
+            printMCU();
+            printBluetooth();
+            counter=0;
+        }else{
+            counter++;
+        }
+//        UARTprintf("R %D %D %D x\n", X, Y, Z, UART0_BASE);
 
         // NOTE:
         // the raw data of these three axes are all from -180 to 180.
@@ -249,7 +400,6 @@ int main(){
         // Otherwise, the servo may be broken!
 
         // design your parse to process the collected raw MPU data here
-
 
         // show data here (recommend to use interrupt)
         // example: R aaa bbb ccc x
