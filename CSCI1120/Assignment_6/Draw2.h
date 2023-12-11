@@ -1,3 +1,7 @@
+// Name:       Ankhbayar Enkhtaivan
+// Student ID: 1155185142
+// Email:      1155185142@link.cuhk.edu.hk
+
 #ifndef DRAW2_H
 #define DRAW2_H
 

@@ -1,3 +1,7 @@
+// Name:       Ankhbayar Enkhtaivan
+// Student ID: 1155185142
+// Email:      1155185142@link.cuhk.edu.hk
+
 #ifndef WILDDRAW4_H
 #define WILDDRAW4_H
 #include "WildCard.h"
