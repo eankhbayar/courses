@@ -51,13 +51,13 @@ string ActionCard::toString() {
         }
     }else{
         if(this->getAction() == Action::Skip){
-            return "[" + COLORS[static_cast<int>(this->getColor())] + "S]";
+            return string() + "[" + COLORS[static_cast<int>(this->getColor())][0] + "S]";
         }
         if(this->getAction() == Action::Reverse){
-            return "[" + COLORS[static_cast<int>(this->getColor())] + "R]";
+            return string() + "[" + COLORS[static_cast<int>(this->getColor())][0] + "R]";
         }
         if(this->getAction() == Action::Draw2){
-            return "[" + COLORS[static_cast<int>(this->getColor())] + "D]";
+            return string() + "[" + COLORS[static_cast<int>(this->getColor())][0] + "D]";
         }
     }
 }

@@ -26,7 +26,7 @@ bool Card::match(Card* top) {
     return color == top->getColor() || value == top->getValue();
 }
 
-void Card::play(GameState& /* uno */) {
+void Card::play(GameState& uno/* uno */) {
     cout << "Discarded " << this->toString() << endl;
 }
 

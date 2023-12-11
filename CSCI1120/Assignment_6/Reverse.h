@@ -6,6 +6,7 @@
 // TODO:
 // Define the Reverse class which inherits from ActionCard.
 class Reverse : public virtual ActionCard {
+public:
     Reverse(Color c);
     virtual void play(GameState& uno) override;
 };

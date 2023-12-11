@@ -37,9 +37,12 @@ void Player::printHand(bool flipped) {
 
     for(int i = 0; i < this->handSize(); i++){
         if(flipped){
-            cout << "[" << hand[i]->toString() << "] ";
+            cout << hand[i]->toString();
         }else{
-            cout << "[Uno] ";
+            cout << "[Uno]";
+        }
+        if(i != this->handSize()-1){
+            cout << " ";
         }
     }
     cout << endl;
@@ -70,6 +73,10 @@ void Player::playCard(int idx, GameState& uno) {
     // Move the card from hand to discard pile
     uno.discardPile->stack(card);
     hand.erase(hand.begin() + idx);
+
+    // Carry out the action of the played card
+    card->play(uno);
+
 }
 
 Color Player::mostFrequentColor() {

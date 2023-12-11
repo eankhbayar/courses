@@ -28,7 +28,11 @@ Deck::Deck(bool fill) {
 }
 
 void Deck::shuffle() {
+#ifdef _WIN32
     random_shuffle(cards.begin(), cards.end());
+#else
+    random_shuffle(cards.begin(), cards.end(), [](int n) { return std::rand() % n; });
+#endif
 }
 
 void Deck::print() {
@@ -37,8 +41,16 @@ void Deck::print() {
     // all cards of the deck. List at most 10 cards per line.
 
     for(int i = 0; i < cards.size(); i++){
-        cout << setw(7) << cards[i]->toString() << '=' << int(cards[i]->getValue()) << " ";
-        if((i+1) % 10 == 0){
+        int value = int(cards[i]->getValue());
+        string str = cards[i]->toString();
+        string value_str = to_string(value);
+        if(i == cards.size() - 1){
+            cout << setw(7) << left << string() + cards[i]->toString() + '=' + value_str;
+        }else{
+            cout << setw(8) << left << string() + cards[i]->toString() + '=' + value_str + " ";
+        }
+        // cout << "K";
+        if((i+1) % 10 == 0 || i == cards.size()-1){
             cout << endl;
         }
     }

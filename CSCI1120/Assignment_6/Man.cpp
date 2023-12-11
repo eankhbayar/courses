@@ -19,13 +19,33 @@ int Man::pickCard(GameState& uno) {
     // If the card cannot match the top of the discard pile, show 
     // "[x]" which means the card cannot be played.
     // Print at most 10 cards per line if there are many cards in hand.
+    
+    int count = 0;
 
+    for(int i = 0; i < this->handSize(); i++){
+        if(this->hand[i]->match(uno.discardPile->top())){
+            count++;
+            cout << "[" << i << "]" << this->hand[i]->toString() << " ";
+        }else{
+            cout << "[x]" << this->hand[i]->toString() << " ";
+        }
+        if((i+1) % 10 == 0){
+            cout << endl;
+        }
+    }
 
     // Show the [D]raw option if draw pile still has cards.
     
+    if(uno.drawPile->size() > 0){
+        cout << "[D]raw" << endl;
+    }
 
     // You may make an early return with PASSED if no matched cards in hand 
     // and draw pile is empty.
+
+    if(count == 0 && uno.drawPile->size() == 0){
+        return PASSED;
+    }
 
     // Get user input for the option (selected card index or 'D' for draw).
     // Keep prompting until the option is valid.
@@ -44,4 +64,40 @@ int Man::pickCard(GameState& uno) {
     // Hint: read the user input as a string first. You can convert it to
     // integer later using an input string stream or the stoi() function.
     // The string stream method is preferred as it can detect non-integer input.
+
+    string input;
+    int index;
+
+    while(true){
+        cout << "Enter option: ";
+        cin >> input;
+        if(input == "D" || input == "d"){
+            if(uno.drawPile->size() > 0){
+                this->drawCard(uno.drawPile, 1);
+                if(this->hand[this->handSize()-1]->match(uno.discardPile->top())){
+                    cout << "Drawn " << this->hand[this->handSize()-1]->toString() << endl;
+                    return this->handSize()-1;
+                }else{
+                    return DRAWN;
+                }
+            }else{
+                cout << "Invalid option!" << endl;
+            }
+        }else{
+            try{
+                index = stoi(input);
+                if(index >= 0 && index < this->handSize()){
+                    if(this->hand[index]->match(uno.discardPile->top())){
+                        return index;
+                    }else{
+                        cout << "Invalid option!" << endl;
+                    }
+                }else{
+                    cout << "Invalid option!" << endl;
+                }
+            }catch(...){
+                cout << "Invalid option!" << endl;
+            }
+        }
+    }
 }

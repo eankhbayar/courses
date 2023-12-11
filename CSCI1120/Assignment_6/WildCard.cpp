@@ -10,10 +10,11 @@ WildCard::WildCard() : ActionCard(Color::Wild, Action::ChgColor) {
     setValue(Value::W);
 }
 
-bool WildCard::match(Card* /* top */) {
+bool WildCard::match(Card* top ) {
     // TODO:
     // Add one statement here to complete the color matching logic 
     // for this card type
+    return true;
 }
 
 void WildCard::play(GameState& uno) {
@@ -23,6 +24,46 @@ void WildCard::play(GameState& uno) {
     // (This check is to skip redundant superclass Card's play() call 
     //  for WildDraw4 since it's been called in Draw2's play().)
     // Hint: use dynamic_cast<>().
+
+    if(dynamic_cast<WildDraw4*>(this) == nullptr){
+        Card::play(uno);
+    }
+
+    int id = *uno.turn;
+    Player* currentPlayer = uno.players[id];
+    Bot* botPlayer = dynamic_cast<Bot*>(currentPlayer);
+    Color selectedColor;
+    char selectedColor_;
+
+    if(botPlayer != nullptr) {
+        // If the player is a bot, use the mostFrequentColor() function.
+        selectedColor = botPlayer->mostFrequentColor();
+    } else {
+        // If the player is a human, prompt for color selection.
+        cout << "Enter a color [R, Y, G, B]: ";
+        cin >> selectedColor_;
+
+
+        while(selectedColor_ != 'R' && selectedColor_ != 'Y' && selectedColor_ != 'G' && selectedColor_ != 'B') {
+            cout << "Invalid option! Enter a color [R, Y, G, B]: ";
+            cin >> selectedColor_;
+        }
+    }
+
+    if(selectedColor_ == 'R') {
+        selectedColor = Color::Red;
+    } else if(selectedColor_ == 'Y') {
+        selectedColor = Color::Yellow;
+    } else if(selectedColor_ == 'G') {
+        selectedColor = Color::Green;
+    } else if(selectedColor_ == 'B') {
+        selectedColor = Color::Blue;
+    }
+
+    // Set color of this card to the selected color.
+    setColor(selectedColor);
+
+    cout << "Color changed to " << COLORS[int(getColor())] << "!" << endl;
 
     // TODO:
     // Change color from Wild to the color selected by the player.
@@ -34,12 +75,17 @@ void WildCard::play(GameState& uno) {
     // single character, valid choice in [R, Y, G, B], to select a color
     // to change. Show error message "Invalid option!" if the user input 
     // is not one of the 4 letters.
-    // Set color of this card to the selected color. 
-
-    cout << "Color changed to " << COLORS[int(getColor())] << "!" << endl;
+    // Set color of this card to the selected color.
 }
 
 string WildCard::toString() {
     // TODO:
     // Return a string representation of this card with color code shown as 'W'
+
+    if(this->getAction() == Action::Draw4){
+        return "[WD]";
+    }
+    if(this->getAction() == Action::ChgColor){
+        return "[WC]";
+    }
 }

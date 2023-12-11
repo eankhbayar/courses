@@ -71,13 +71,15 @@ int main()
 	int delta = 1;
 	int turn = 0;
 
-	GameState uno{ players, &drawPile, &discardPile,
+	GameState uno = { players, &drawPile, &discardPile,
 		&turnSkipped, &cardsToDraw, &turn, &delta, P, debugMode
 	};
 
 	// Shuffle the deck and deal cards to each player
-	drawPile.print();
-	cout << "-----" << endl;
+	if(debugMode){
+		cout <<"Cards created:"<<endl;
+		drawPile.print();
+	}
 	drawPile.shuffle();
 	for (int i = 0; i < P; i++) {
 		players[i]->drawCard(&drawPile, H);
@@ -86,21 +88,26 @@ int main()
 	// Draw the first card onto discard pile
 	vector<Card*> firstCard;
 	drawPile.draw(firstCard, 1);
-	discardPile.stack(firstCard.at(0)); 
+	discardPile.stack(firstCard[0]); 
 	if (debugMode) {
-		cout << "Draw Pile:" << endl;
+		cout << "Draw pile after shuffling and dealing:" << endl;
 		drawPile.print();
 	}
-
+	int turns = 0;
+	int counter = 0;
 	// Start the game loop
-
+	while (true) {
 		// TODO:
 		// Print the "turn header" which shows discard pile's top card, 
 		// current color and current size of draw pile.
-
+		cout << "=========================================================" << endl;
+		cout <<	"Turn " << counter + 1 << ":"<<endl;
+		cout << "Discard Pile: " << discardPile.top()->toString() << "  " << "Current Color: " << setw(7) << left << COLORS[int(discardPile.top()->getColor())] << " " << "Draw Pile: " << drawPile.size() << endl;
+		cout << "---------------------------------------------------------" << endl;
 		// Print the name of the current player.
 		// (Hint: you can use the turn integer to index the players array
 		//  to get a pointer to the current player.)
+		cout << player->getName() << ": " << endl;
 
 		// If cardsToDraw > 0, current player draws the required # cards.
 		// If turnSkipped is true, current player skips picking and playing 
@@ -110,18 +117,78 @@ int main()
 		// Then call the playCard() method with the obtained index if it is 
 		// not PASSED and not DRAWN.
 
+		if(cardsToDraw > 0){
+			player->drawCard(&drawPile, cardsToDraw);
+			cardsToDraw = 0;
+		}
+		if(turnSkipped){
+			turnSkipped = false;
+			cout << "Turn skipped!" << endl;
+		}else{
+			int index = player->pickCard(uno);
+			if(index != PASSED && index != DRAWN){
+				player->playCard(index, uno);
+				turns = 0;
+			}
+			if(index == DRAWN){
+				turns += 1;
+			}
+		}
+
 		// Check game over condition. Exit the game loop if either:
 		// (1) current player's hand has no cards.
 		// (2) all players consecutively passed their turns 
 	    //     (i.e., no one can play a card or draw).
 
-		// Reset cardsToDraw and turnSkipped for clean state for next turn.
+		bool gameOver = false;
+		for(int i = 0; i < P; i++){
+			if(player->handSize() == 0){
+				gameOver = true;
+			}
+		}
 
+		if(turns == P){
+			gameOver = true;
+		}
+
+		if(gameOver){
+			break;
+		}
+		
 		// Update the turn integer to let the next player become current.
-	
-
+		
+		counter++;
+		turn += delta;
+		if (turn < 0)
+			turn += P;
+		else if (turn >= P)
+			turn -= P;
+		player = players[turn];
+	}
 	// TODO:
 	// Print the game over message.
 	// List all players' hands and the sum of points of all cards in hand.
 	// Print the name of the winner. 
+	/* 
+	**********
+	Game Over!
+	**********
+	*/
+	cout << "**********" << endl;
+	cout << "Game Over!" << endl;
+	cout << "**********" << endl;
+	for(int i = 0; i < P; i++){
+		cout << players[i]->getName() << " owes ";
+		cout << setw(4) << right << players[i]->handPoints() << " point(s): ";
+		players[i]->printHand(true);
+	}
+	int min = INT_MAX;
+	int winner = 0;
+	for(int i = 0; i < P; i++){
+		if(players[i]->handPoints() < min){
+			min = players[i]->handPoints();
+			winner = i;
+		}
+	}
+	cout << "The winner is " << players[winner]->getName() << "!" << endl;
 }
